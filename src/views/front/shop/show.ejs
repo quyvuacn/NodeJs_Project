@@ -1,0 +1,287 @@
+<!-- Product shop section begin -->
+<section class="product-shop spad page-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <%- include('../components/form-shop') %> 
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="product-pic-zoom">
+                            <img class="product-big-img" src="front/img/products/<%= product.productImages[0].path %>" alt="">
+                            <div class="zoom-icon">
+                                <i class="fa fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="product-thumbs">
+                            <div class="product-thumbs-track ps-slider owl-carousel">
+                                <% product.productImages.forEach((path,index) => { %>
+                                    <% if (index>0) { %>
+                                        <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg">
+                                            <img src="front/img/products/<%=path %> " alt="">
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <span><%= product.tag %> </span>
+                                    <h3><%= product.name %> </h3>
+                                    <a href="" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                                </div>
+                                <div class="pd-rating">
+                                    <% for( let i = 1; i <= 5; i++ ) { %>
+                                            <% if (avgRating>=i) { %>
+                                                <i class="fa-solid fa-star"></i>
+                                            <% } else if(avgRating>i-1) { %>
+                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                            <% } else { %>
+                                                <i class="fa-regular fa-star"></i>
+                                            <% } %>
+    
+                                    <% } %>
+                                    <span>( <%= avgRating.toFixed(1) %> )</span>
+                                </div>
+                                <div class="pd-desc">
+                                    <p><%= product.content %> </p>
+                                    <h4>$<%= product.discount %>  <span>$<%= product.price %> </span></h4>
+                                </div>
+                                <div class="pd-color">
+                                    <h6>Color</h6>
+                                    <div class="pd-color-choose">
+                                        <% new Set(product.productDetails.map(el=>el.color)).forEach(color => { %>
+                                            <div class="cc-item">
+                                                <input type="radio" id="cc-<%=color%> ">
+                                                <label for="cc-<%=color%> " class="cc-<%=color%> "></label>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                                <div class="pd-size-choose">
+                                    <% new Set(product.productDetails.map(el=>el.size)).forEach(size => { %>
+                                        <div class="sc-item">
+                                            <input type="radio" id="sm-size">
+                                            <label for="sm-size"><%= size %> </label>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                                <form action="cart/create" method="post">
+                                    <div class="quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input name="product_id" value="<%= product.id %>" hidden type="number">
+                                                <input name="qty" type="text" value="1" id="qty">
+                                            </div>
+                                            <button type="submit" class="primary-btn">Add To Cart</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <ul class="pd-tags">
+                                    <li><span>CATEGORIES</span>: <%= product.category.name %> </li>
+                                    <li><span>TAGS</span>: <%= product.tag %> </li>
+                                </ul>
+                                <div class="pd-share">
+                                    <div class="p-code">Sku : <%= product.sku %> </div>
+                                    <div class="pd-social">
+                                        <a href="#"><i class="ti-facebook"></i></a>
+                                        <a href="#"><i class="ti-twitter-alt"></i></a>
+                                        <a href="#"><i class="ti-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+                <div class="product-tab">
+                    <div class="tab-item">
+                        <ul class="nav" role="tablist">
+                            <li><a class="active" href="#tab-1" data-toggle="tab" role="tab">DESCRIPTION</a></li>
+                            <li><a href="#tab-2" data-toggle="tab" role="tab">SPECIFICATIONS</a></li>
+                            <li><a href="#tab-3" data-toggle="tab" role="tab">Customer Reviews ( <%= productComments.length %> )</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-item-content">
+                        <div class="tab-content">
+                            <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                                <div class="product-content">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <%- product.description %> 
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <img src="front/img/products/<%= product.productImages[0].path %> " alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                                <div class="specification-table">
+                                    <table>
+                                        <tr>
+                                            <td class="p-catagory">Customer Rating</td>
+                                            <td>
+                                                <div class="pd-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <span>( <%= productComments.length %> )</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-catagory">Price</td>
+                                            <td>
+                                                <div class="p-price">
+                                                    $<%= product.discount %> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-catagory">Availability</td>
+                                            <td>
+                                                <div class="p-stock"><%=product.productDetails.map(el=>el.qty).reduce((p,n)=>p+n,0) %>  in stock</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-catagory">Weight</td>
+                                            <td>
+                                                <div class="p-weight"><%= product.weight %>kg</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-catagory">Size</td>
+                                            <td>
+                                                <div style="display: flex;justify-content: center;gap :12px">
+                                                    <% new Set(product.productDetails.map(el=>el.size)).forEach(size => { %>
+                                                        <div class="p-size"><%= size %> </div>
+                                                    <% }) %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                <div class="customer-review-option">
+                                    <h4><%= productComments.length %>  Comments</h4>
+                                    <div class="comment-option">
+                                        <% productComments.forEach(comment => { %>
+                                            <div class="co-item">
+                                                <div class="avatar-pic">
+                                                    <img src="front/img/user/<%= comment.user.avatar || 'default-avatar.png' %> " alt="">
+                                                </div>
+                                                <div class="avatar-text">
+                                                    <div class="at-rating">
+                                                        <% for( let i = 1; i <= 5; i++ ) { %>
+                                                            <% if (comment.rating>=i) { %>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            <% } else { %>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </div>
+                                                    <h5><%= comment.user.name %>  <span><%= comment.createdAt.toLocaleDateString() %> </span></h5>
+                                                    <div class="at-reply"><%= comment.messages %> </div>
+                                                </div>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                    <div class="leave-comment">
+                                        <h4>Leave A Comment</h4>
+                                        <form class="comment-form" method="post">
+                                            <div class="row">
+                                                <div class="col-lg-12 mt-3">
+                                                    <textarea style="height: 120px;" class="form-control" placeholder="Messages" name="messages" required></textarea>
+                                                    <div class="personal-rating">
+                                                        <h6>Your Rating</h6>
+                                                        <div class="rate">
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <input type="number" hidden name="rating" id="post_rating" required>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="site-btn">Send message</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End -->
+
+<!-- Realated Product section Begin -->
+<div class="related-products spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Relative Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <% relativeProducts.forEach(product => { %>
+                <div class="col-lg-3 col-sm-6">
+                    <%- include('../components/product',{product})  -%> 
+                </div>
+            <% }) %>
+            
+            
+        </div>
+    </div>
+</div>
+<!-- End -->
+<script>
+    let stars = Array.from(document.querySelectorAll(".rate i"));
+
+    stars.forEach((element) => {
+    element.addEventListener("click", (e) => {
+        rate(element);
+    });
+    /********** */
+    element.addEventListener("mouseover", (e) => {
+        rate(element);
+    });
+    });
+
+    function rate(element) {
+    stars.forEach((el) => {
+        el.classList.remove("selected");
+    });
+    selectedRating = stars.indexOf(element)
+    document.querySelector('#post_rating').value = Number(selectedRating) +1
+    for (let i = 0; i <= selectedRating; i++) {
+        stars[i].classList.add("selected");
+    }
+    }
+
+    document.querySelector('.pro-qty').addEventListener('click', function(e){
+        if(e.target.closest('.dec')){
+            qty.value>1 ? qty.value-- : '' 
+        }
+        if(e.target.closest('.inc')){
+            qty.value++
+        }
+
+    })
+
+</script>

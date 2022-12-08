@@ -1,0 +1,43 @@
+<section class="product-shop spad">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+            <%- include('../components/form-shop') %> 
+         </div>
+         <div class="col-lg-9 order-1 order-lg-2">
+            <div class="product-show-option">
+               <div class="row">
+                  <div class="col-lg-7 col-md-7">
+                     <div class="select-option">
+                        <form style="display: flex">
+                           <select name="sort_by" class="sorting" style="display: none;" onchange="this.form.submit()">
+                              <option <%= locals.request.query.sort_by == 'name-asc' ? 'selected' : '' %>  value="name-asc">Name: A-Z</option>
+                              <option <%= locals.request.query.sort_by == 'name-desc' ? 'selected' : '' %> value="name-desc">Name: Z-A</option>
+                              <option <%= locals.request.query.sort_by == 'price-asc' ? 'selected' : '' %> value="price-asc">Price: Ascend</option>
+                              <option <%= locals.request.query.sort_by == 'price-desc' ? 'selected' : '' %> value="price-desc">Price: Decrease</option>
+                           </select>
+                           <select name="limit" class="p-show" onchange="this.form.submit()">
+                              <option <%= locals.request.query.limit == 3 ? 'selected' : '' %> value="3">Show: 3</option>
+                              <option <%= locals.request.query.limit == 6 ? 'selected' : '' %> value="6">Show: 6</option>
+                              <option <%= locals.request.query.limit == 9 ? 'selected' : '' %> value="9">Show: 9</option>
+                              <option <%= locals.request.query.limit == 15 ? 'selected' : '' %> value="15">Show: 15</option>
+                           </select>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="product-list">
+               <div class="row">
+                  <% products.forEach(product => { %>
+                  <div class="col-lg-4 col-sm-6">
+                     <%- include('../components/product',{product}) %> 
+                  </div>
+                  <% }) %>
+               </div>
+            </div> 
+            <%- include('../components/pagination',{pages : products.pages}) %> 
+         </div>
+      </div>
+   </div>
+</section>

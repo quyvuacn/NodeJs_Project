@@ -1,0 +1,46 @@
+<!--Register Section brgin-->
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>Register</h2>
+                    <% if (notification) { %>
+                        <div class="alert alert-success" role="alert">
+                            <%= notification %> 
+                        </div>
+                    <% } %>
+                    <% if (error) { %>
+                        <div class="alert alert-warning" role="alert">
+                            <%= error %> 
+                        </div>
+                    <% } %>
+                    
+                    <form action="/register" method="post">
+                        <div class="group-input">
+                            <label for="username">Email address</label>
+                            <input type="email" id="username" name="email" value="<%= email || '' %> " required>
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Nickname</label>
+                            <input type="text" id="username" name="name" value="<%= name || '' %> " required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password *</label>
+                            <input type="password" id="password" name="password" minlength="8" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="con-pass">Confirm Password *</label>
+                            <input type="password" id="con-pass" name="r_password" minlength="8" required>
+                        </div>
+                        <button type="submit" class="site-btn register-btn">REGISTER</button>
+                    </form>
+                    <div class="switch-login">
+                        <a href="/login" class="or-login">Or Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->

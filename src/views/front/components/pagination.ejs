@@ -1,0 +1,51 @@
+<% if (pages>1) { %>
+    <style>
+        .page-link{
+            color: #212529;
+        }
+        .page-link:hover{
+            color: #212529;
+        }
+    </style>
+    
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true"><i class="fa-solid fa-chevron-left"></i></span>
+            </a>
+          </li>
+          <% for( let page = 1; page <= pages; page++ ) { %>
+            <li class="page-item"><a class="page-link" page="<%= page %>" href=""><%= page %> </a></li>
+          <% } %>
+    
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+            </a>
+          </li>
+        </ul>
+    </nav>
+    
+    <script>
+        let pageLink = document.querySelectorAll('.page-link')
+        pageLink.forEach(function(el){
+            el.addEventListener('click', function(ev){
+                ev.preventDefault()
+                let page = Number(el.getAttribute('page'))
+                let search = window.location.search
+                if(search){
+                    search=search.replace(/&page=[0-9]*/g,'')
+                    search=search.replace(/\?page=[0-9]*/g,'')
+                    search ? search += `&page=${page}`: search +=`?page=${page}`
+                    
+                }else{
+                    search=`?page=${page}`
+                }
+                window.location.search = search
+                
+               
+            })
+        })
+    </script>
+<% } %>
